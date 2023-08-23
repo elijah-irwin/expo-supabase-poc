@@ -1,7 +1,7 @@
 {
   "name": "expo-supabase-poc",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -23,7 +23,9 @@
     "react-native-screens": "~3.22.0",
     "expo-linking": "~5.0.2",
     "expo-constants": "~14.4.2",
-    "react-native-gesture-handler": "~2.12.0"
+    "react-native-gesture-handler": "~2.12.0",
+    "react-native-web": "~0.19.6",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
