@@ -4,13 +4,16 @@ import { StyleSheet, View, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 // DB.
-import { supabase } from '../lib/subabase';
+import { supabase } from '../lib/supabase';
 import { Session } from '@supabase/supabase-js';
+import { useAuthContext } from '../contexts/AuthContext';
 
 /****************************************
  * - Account Page -
  ***************************************/
-export default function Account({ session }: { session: Session }) {
+export default function Account() {
+  const session = useAuthContext();
+
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
   const [website, setWebsite] = useState('');
@@ -83,26 +86,16 @@ export default function Account({ session }: { session: Session }) {
         <Input label='Email' value={session?.user?.email} disabled />
       </View>
       <View style={styles.verticallySpaced}>
-        <Input
-          label='Username'
-          value={username || ''}
-          onChangeText={text => setUsername(text)}
-        />
+        <Input label='Username' value={username || ''} onChangeText={text => setUsername(text)} />
       </View>
       <View style={styles.verticallySpaced}>
-        <Input
-          label='Website'
-          value={website || ''}
-          onChangeText={text => setWebsite(text)}
-        />
+        <Input label='Website' value={website || ''} onChangeText={text => setWebsite(text)} />
       </View>
 
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
           title={loading ? 'Loading ...' : 'Update'}
-          onPress={() =>
-            updateProfile({ username, website, avatar_url: avatarUrl })
-          }
+          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
           disabled={loading}
         />
       </View>
