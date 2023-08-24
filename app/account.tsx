@@ -1,12 +1,11 @@
 // React.
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Alert, Text } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 // DB.
 import { supabase } from '../lib/subabase';
 import { Session } from '@supabase/supabase-js';
-import { useThemeContext } from '../contexts/ThemeContext';
 
 /****************************************
  * - Account Page -
@@ -16,8 +15,6 @@ export default function Account({ session }: { session: Session }) {
   const [username, setUsername] = useState('');
   const [website, setWebsite] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
-
-  const { theme, toggleTheme } = useThemeContext();
 
   useEffect(() => {
     if (session) getProfile();
@@ -112,11 +109,6 @@ export default function Account({ session }: { session: Session }) {
 
       <View style={styles.verticallySpaced}>
         <Button title='Sign Out' onPress={() => supabase.auth.signOut()} />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Text>current theme is: {theme}</Text>
-        <Button title='Toggle Theme' onPress={toggleTheme} />
       </View>
     </View>
   );

@@ -4,15 +4,15 @@ import { View } from 'react-native';
 import 'react-native-url-polyfill/auto';
 
 // DB.
-import { supabase } from './lib/subabase';
+import { supabase } from '../lib/subabase';
 import { Session } from '@supabase/supabase-js';
 
 // Pages.
-import Auth from './components/Auth';
-import Account from './components/Account';
+import Auth from '../components/Auth';
+import Account from '../components/Account';
 
 /****************************************
- * - Main App Entry -
+ * - Main Page -
  ***************************************/
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -28,7 +28,7 @@ export default function App() {
   }, []);
 
   return (
-    <View>
+    <View style={{ backgroundColor: 'red' }}>
       {session && session.user ? (
         <Account key={session.user.id} session={session} />
       ) : (
