@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactElement } from 'react';
-import { useSegments, router } from 'expo-router';
+import { useSegments, useRouter, useRootNavigationState } from 'expo-router';
 
 // DB.
 import { supabase } from '../lib/supabase';
@@ -11,7 +11,6 @@ import { Session } from '@supabase/supabase-js';
 export const AuthContext = createContext<Session | null>(null);
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('Auth context must be used within the provider.');
   return context;
 };
 
@@ -39,10 +38,13 @@ export const AuthProvider = ({ children }: { children: ReactElement }) => {
 
 function useRequireAuth(session: Session | null) {
   const segments = useSegments();
+  const router = useRouter();
+  const navState = useRootNavigationState();
 
   useEffect(() => {
+    if (!navState?.key) return;
     const inAuthGroup = segments[0] === '(auth)';
     if (!session && !inAuthGroup) router.replace('/login');
     else if (session && session.user && inAuthGroup) router.replace('/');
-  }, [session, segments]);
+  }, [session, segments, navState]);
 }
